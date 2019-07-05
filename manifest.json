@@ -4,11 +4,19 @@
     "version": "1.0",
     "description": "Sets a five second delay to certain websites to help you browse more mindfully",
     "icons": {
-        "48": "icons/border-48.png"
+        "48": "border-48.png"
     },
     "content_scripts": [{
         "matches": ["*://*.hckrnews.com/*", "*://*.reddit.com/*", "*://*.facebook.com/*", "*://*.news.ycombinator.com/*"],
         "js": ["delay.js"]
-    }]
-
+    }],
+    "options_ui": {
+        "page": "options.html"
+    },
+    "permissions": ["storage"],
+    "applications": {
+        "gecko": {
+            "id": "delaywebpage@gmail.com"
+        }
+    }
 }
