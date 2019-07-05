@@ -10,10 +10,6 @@
         "matches": ["*://*.hckrnews.com/*", "*://*.reddit.com/*", "*://*.facebook.com/*", "*://*.news.ycombinator.com/*"],
         "js": ["delay.js"]
     }],
-    "options_ui": {
-        "page": "options.html"
-    },
-    "permissions": ["storage"],
     "applications": {
         "gecko": {
             "id": "delaywebpage@gmail.com"
