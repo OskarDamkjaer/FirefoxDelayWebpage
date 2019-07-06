@@ -4,7 +4,7 @@ A firefox add-on to make websites like facebook and reddit have a seven second d
 
 ## Features
 
-If anyone besides me uses the add-on and want a feature
+In the unlikely event of anyone besides me using this add-on, please don't hesitate if you have a feature request! :) Send me an email at "delaywebpage@gmail.com".
 
 ## Todos
 
