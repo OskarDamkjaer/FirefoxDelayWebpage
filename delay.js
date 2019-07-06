@@ -4,7 +4,7 @@ function removeBlockingDiv() {
             document.getElementById("__dly_id__").remove()
             document.removeEventListener("visibilitychange", handleVisibilityChange, false)
         }
-    }, 5000)
+    }, 7000)
 }
 
 // Handle when tab gains focus
@@ -31,7 +31,7 @@ z-index:999999999;
 line-height:normal;
 font-weight: normal; 
 color:black;`
-blocking_div.appendChild(document.createTextNode("Wait five seconds for the page to load"));
+blocking_div.appendChild(document.createTextNode("Wait seven seconds for the page to load"));
 document.body.appendChild(blocking_div);
 
 document.addEventListener("visibilitychange", handleVisibilityChange, false);
