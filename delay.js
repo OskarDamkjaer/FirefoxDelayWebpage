@@ -18,7 +18,7 @@ function handleVisibilityChange() {
 
 const blocking_div = document.createElement("div");
 blocking_div.id = "__dly_id__"
-blocking_div.style.cssText = `background-color:#3CAEA3;
+blocking_div.style.cssText = `background-color:#72a3dd;
 font-size:7vw;
 padding-top:7vh;
 position:fixed;
@@ -30,7 +30,7 @@ text-align:center;
 z-index:999999999;
 line-height:normal;
 font-weight: normal; 
-color:black;`
+color:#FFF;`
 blocking_div.appendChild(document.createTextNode("Wait seven seconds for the page to load"));
 document.body.appendChild(blocking_div);
 

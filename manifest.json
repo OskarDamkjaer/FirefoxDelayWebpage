@@ -1,15 +1,24 @@
 {
     "manifest_version": 2,
     "name": "DelayWebpage",
-    "version": "1.0",
-    "description": "Sets a five second delay to certain websites to help you browse more mindfully",
+    "version": "1.3",
+    "description": "Sets a seven second delay to certain websites to help you browse more mindfully",
     "icons": {
-        "48": "border-48.png"
+        "128": "128px_icon.png"
     },
-    "content_scripts": [{
-        "matches": ["*://*.hckrnews.com/*", "*://*.reddit.com/*", "*://*.facebook.com/*", "*://*.news.ycombinator.com/*"],
-        "js": ["delay.js"]
-    }],
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.hckrnews.com/*",
+                "*://*.reddit.com/*",
+                "*://*.facebook.com/*",
+                "*://*.news.ycombinator.com/*"
+            ],
+            "js": [
+                "delay.js"
+            ]
+        }
+    ],
     "applications": {
         "gecko": {
             "id": "delaywebpage@gmail.com"
