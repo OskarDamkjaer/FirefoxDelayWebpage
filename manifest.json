@@ -1,27 +1,22 @@
 {
+
     "manifest_version": 2,
-    "name": "DelayWebpage",
+    "name": "Mod2Blocker",
     "version": "1.3",
-    "description": "Sets a seven second delay to certain websites to help you browse more mindfully",
+    "description": "Blocks common webpages with feeds every other day",
     "icons": {
-        "128": "128px_icon.png"
+        "48": "border-48.png"
     },
-    "content_scripts": [
-        {
-            "matches": [
-                "*://*.hckrnews.com/*",
-                "*://*.reddit.com/*",
-                "*://*.facebook.com/*",
-                "*://*.news.ycombinator.com/*"
-            ],
-            "js": [
-                "delay.js"
-            ]
-        }
-    ],
-    "applications": {
-        "gecko": {
-            "id": "delaywebpage@gmail.com"
-        }
-    }
+    "content_scripts": [{
+        "matches": [
+            "*://*.hckrnews.com/*",
+            "*://*.reddit.com/*",
+            "*://*.facebook.com/*",
+            "*://*.instagram.com/*",
+            "*://*.youtube.com/*",
+            "*://*.twitter.com/*",
+            "*://*.news.ycombinator.com/*"
+        ],
+        "js": ["extension.js"]
+    }]
 }
