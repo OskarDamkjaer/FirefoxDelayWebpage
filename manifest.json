@@ -6,22 +6,15 @@
     "icons": {
         "128": "128px_icon.png"
     },
-    "content_scripts": [
-        {
-            "matches": [
-                "*://*.hckrnews.com/*",
-                "*://*.reddit.com/*",
-                "*://*.facebook.com/*",
-                "*://*.news.ycombinator.com/*"
-            ],
-            "js": [
-                "delay.js"
-            ]
-        }
-    ],
-    "applications": {
-        "gecko": {
-            "id": "delaywebpage@gmail.com"
-        }
-    }
+    "content_scripts": [{
+        "matches": [
+            "*://*.hckrnews.com/*",
+            "*://*.reddit.com/*",
+            "*://*.facebook.com/*",
+            "*://*.news.ycombinator.com/*"
+        ],
+        "js": [
+            "delay.js"
+        ]
+    }]
 }
