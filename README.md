@@ -1,11 +1,7 @@
 # DelayWebpage
+Sets a seven second delay to certain websites to help you browse more mindfully. Currently only supports facebook, hackernews and reddit.
 
-A firefox add-on to make websites like facebook and reddit have a seven second delay on load, to help spend your time more mindfully.
+## Mod2Blocker
 
-## Features
+A firefox add-on to make websites with infinite feeds like facebook and reddit only available when the date modulo 2 is 0. For when you don't want to quit but you don't want to overuse feeds.
 
-In the unlikely event of anyone besides me using this add-on, please don't hesitate if you have a feature request! :) Send me an email at "delaywebpage@gmail.com".
-
-## Todos
-
-Settings for how long the timeout is and which webpages it would affect
