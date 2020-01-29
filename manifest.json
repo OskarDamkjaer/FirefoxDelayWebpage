@@ -15,6 +15,7 @@
         ],
         "js": [
             "delay.js"
-        ]
+        ],
+        "run_at": "document_start"
     }]
 }

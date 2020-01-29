@@ -1,3 +1,4 @@
+let timeout;
 function removeBlockingDiv() {
     timeout = setTimeout(() => {
         if (document.visibilityState === "visible") {
@@ -29,11 +30,10 @@ height:10000px;
 text-align:center;
 z-index:999999999;
 line-height:normal;
-font-weight: normal; 
+font-weight: normal;
 color:#FFF;`
 blocking_div.appendChild(document.createTextNode("Wait seven seconds for the page to load"));
-document.body.appendChild(blocking_div);
+document.documentElement.appendChild(blocking_div);
 
 document.addEventListener("visibilitychange", handleVisibilityChange, false);
 removeBlockingDiv()
-let timeout;
