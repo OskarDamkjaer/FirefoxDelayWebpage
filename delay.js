@@ -1,25 +1,45 @@
-let timeout;
-function removeBlockingDiv() {
+function onError(error) {
+  console.log(
+    `Error: ${error}\n\n please leave a review and tell me to fix this`
+  );
+}
+
+const getting = browser.storage.sync.get("settings");
+getting.then(onGot, onError);
+
+function onGot(item) {
+  const settings = item.settings || {
+    color: "#72a3dd",
+    text: "default text",
+    time: 7
+  };
+  const { color, time, text } = settings;
+  let timeout;
+
+  function removeBlockingDiv() {
     timeout = setTimeout(() => {
-        if (document.visibilityState === "visible") {
-            document.getElementById("__dly_id__").remove()
-            document.removeEventListener("visibilitychange", handleVisibilityChange, false)
-        }
-    }, 7000)
-}
+      if (document.visibilityState === "visible") {
+        document.getElementById("__dly_id__").remove();
+        document.removeEventListener(
+          "visibilitychange",
+          handleVisibilityChange,
+          false
+        );
+      }
+    }, time * 1000);
+  }
 
-// Handle when tab gains focus
-function handleVisibilityChange() {
+  function handleVisibilityChange() {
     if (document.visibilityState === "visible") {
-        removeBlockingDiv()
+      removeBlockingDiv();
     } else {
-        clearTimeout(timeout)
+      clearTimeout(timeout);
     }
-}
+  }
 
-const blocking_div = document.createElement("div");
-blocking_div.id = "__dly_id__"
-blocking_div.style.cssText = `background-color:#72a3dd;
+  const blocking_div = document.createElement("div");
+  blocking_div.id = "__dly_id__";
+  blocking_div.style.cssText = `background-color:${color};
 font-size:7vw;
 padding-top:7vh;
 position:fixed;
@@ -31,9 +51,16 @@ text-align:center;
 z-index:999999999;
 line-height:normal;
 font-weight: normal;
-color:#FFF;`
-blocking_div.appendChild(document.createTextNode("Wait seven seconds for the page to load"));
-document.documentElement.appendChild(blocking_div);
+color:"#FFF"};`;
+  blocking_div.appendChild(
+    document.createTextNode(
+      text === "default text"
+        ? `Wait ${time} seconds for the page to load`
+        : text
+    )
+  );
+  document.documentElement.appendChild(blocking_div);
 
-document.addEventListener("visibilitychange", handleVisibilityChange, false);
-removeBlockingDiv()
+  document.addEventListener("visibilitychange", handleVisibilityChange, false);
+  removeBlockingDiv();
+}
