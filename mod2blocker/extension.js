@@ -13,16 +13,17 @@ line-height:normal;
 font-weight: normal; 
 color:#FFF;
 white-space:pre;
-`
+`;
 
 function blockFeeds() {
-    blocking_div.appendChild(document.createTextNode("You don't need feeds every day.\nSee you again tomorrow."));
-    document.body.appendChild(blocking_div);
+  blocking_div.appendChild(
+    document.createTextNode(`You've blocked ${document.title} on odd days`)
+  );
+  document.documentElement.appendChild(blocking_div);
 }
 
-const date = new Date().getDate()
-
+const date = new Date().getDate();
 
 if (date % 2) {
-    blockFeeds()
+  blockFeeds();
 }
