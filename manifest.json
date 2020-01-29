@@ -1,30 +1,30 @@
 {
-  "manifest_version": 2,
-  "name": "DelayWebpage",
-  "version": "1.4",
-  "description": "Sets a delay to distracting websites to help you browse more mindfully",
-  "icons": {
-    "128": "128px_icon.png"
-  },
-  "content_scripts": [
-    {
-      "matches": [
-        "*://*.hckrnews.com/*",
-        "*://*.reddit.com/*",
-        "*://*.facebook.com/*",
-        "*://*.news.ycombinator.com/*"
-      ],
-      "js": ["delay.js"],
-      "run_at": "document_start"
+    "manifest_version": 2,
+    "name": "DelayWebpage",
+    "version": "1.4",
+    "description": "Sets a delay to distracting websites to help you browse more mindfully",
+    "icons": {
+        "128": "icon.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.hckrnews.com/*",
+                "*://*.reddit.com/*",
+                "*://*.facebook.com/*",
+                "*://*.news.ycombinator.com/*"
+            ],
+            "js": ["delay.js"],
+            "run_at": "document_start"
+        }
+    ],
+    "options_ui": {
+        "page": "options.html"
+    },
+    "permissions": ["storage"],
+    "applications": {
+        "gecko": {
+            "id": "{d08be0ef-4964-48c9-b6a8-6918e05c6f89}"
+        }
     }
-  ],
-  "options_ui": {
-    "page": "options.html"
-  },
-  "permissions": ["storage"],
-  "applications": {
-    "gecko": {
-      "id": "ddd9200f-d283-4e91-995e-95aca7c8f29e"
-    }
-  }
 }
