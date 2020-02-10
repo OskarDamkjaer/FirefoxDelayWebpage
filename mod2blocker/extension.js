@@ -17,7 +17,7 @@ white-space:pre;
 
 function blockFeeds() {
   blocking_div.appendChild(
-    document.createTextNode(`You've blocked ${document.title} on odd days`)
+    document.createTextNode("You've blocked this page on odd days")
   );
   document.documentElement.appendChild(blocking_div);
 }
