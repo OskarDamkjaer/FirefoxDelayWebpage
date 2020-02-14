@@ -9,11 +9,13 @@ getting.then(onGot, onError);
 
 function onGot(item) {
   const settings = item.settings || {
-    color: "#72a3dd",
+    color: "#fff",
     text: "default text",
+    fontSize: "svw",
+    textColor: "#000",
     time: 7
   };
-  const { color, time, text } = settings;
+  const { color, time, text, fontSize, textColor } = settings;
   let timeout;
 
   function removeBlockingDiv() {
@@ -40,7 +42,7 @@ function onGot(item) {
   const blocking_div = document.createElement("div");
   blocking_div.id = "__dly_id__";
   blocking_div.style.cssText = `background-color:${color};
-font-size:7vw;
+font-size:${fontSize};
 padding-top:7vh;
 position:fixed;
 top:0;
@@ -51,7 +53,7 @@ text-align:center;
 z-index:999999999;
 line-height:normal;
 font-weight: normal;
-color:"#FFF"};`;
+color:${textColor};`;
   blocking_div.appendChild(
     document.createTextNode(
       text === "default text"

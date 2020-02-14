@@ -14,6 +14,16 @@
             </label>
 
             <label>
+                Font size
+                <input type="text" id="fontSize" >
+            </label>
+
+            <label>
+                Text color (hex)
+                <input pattern="^#(([0-9a-fA-F]{2}){3}|([0-9a-fA-F]){3})$"  type="text" id="textColor" >
+            </label>
+
+            <label>
                 Background color (hex)
                 <input pattern="^#(([0-9a-fA-F]{2}){3}|([0-9a-fA-F]){3})$" type="text" id="color" >
             </label>
@@ -27,6 +37,7 @@
             <button type="submit">Save</button>
             </span>
         </form>
+        <div style="display: none;" id="savedSettings"> Updated settings.</div>
 
         <script src="options.js"></script>
     </body>

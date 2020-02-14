@@ -1,10 +1,10 @@
 {
     "manifest_version": 2,
     "name": "Mod2Blocker",
-    "version": "1.5",
+    "version": "1.6",
     "description": "Blocks common webpages with feeds every other day",
     "icons": {
-        "48": "300x300.png"
+        "300": "300x300.png"
     },
     "content_scripts": [
         {
