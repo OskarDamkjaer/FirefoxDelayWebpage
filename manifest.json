@@ -1,19 +1,14 @@
 {
     "manifest_version": 2,
     "name": "DelayWebpage",
-    "version": "1.4",
+    "version": "1.5",
     "description": "Sets a delay to distracting websites to help you browse more mindfully",
     "icons": {
         "128": "icon.png"
     },
     "content_scripts": [
         {
-            "matches": [
-                "*://*.hckrnews.com/*",
-                "*://*.reddit.com/*",
-                "*://*.facebook.com/*",
-                "*://*.news.ycombinator.com/*"
-            ],
+            "matches": ["<all_urls>"],
             "js": ["delay.js"],
             "run_at": "document_start"
         }

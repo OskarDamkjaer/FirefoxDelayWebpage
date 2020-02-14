@@ -13,9 +13,23 @@ function onGot(item) {
     text: "default text",
     fontSize: "svw",
     textColor: "#000",
-    time: 7
+    time: 7,
+    runOn: String.raw`hckrnews\.com
+reddit\.com
+facebook\.com
+news\.ycombinator\.com
+youtube\.com`
   };
-  const { color, time, text, fontSize, textColor } = settings;
+  const { color, time, text, fontSize, textColor, runOn } = settings;
+
+  if (
+    !runOn
+      .split("\n")
+      .map(s => s.trim())
+      .find(pattern => RegExp(pattern).test(document.URL))
+  ) {
+    return;
+  }
   let timeout;
 
   function removeBlockingDiv() {

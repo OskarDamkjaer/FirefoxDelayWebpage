@@ -33,6 +33,24 @@
                 <input type="number" min="0" id="time" >
             </label>
 
+            <label>
+                Webpages to run on, use same format as default block list for best results:
+                <textarea rows="10" cols="33" id="runOn" > </textarea>
+                <br>
+
+                This uses <code>RexExp(pattern).test(document.URL)</code> internally.
+                So the following example patterns work quite neatly:
+                <br>
+                <ul>
+                    <li>
+                ".*" -> Delay all pages
+                    </li>
+                    <li>
+                "^((?!\google.com).)*$" -> delay all pages without "google.com" in the name
+                </li>
+                </ul>
+            </label>
+
             <span>
             <button type="submit">Save</button>
             </span>
