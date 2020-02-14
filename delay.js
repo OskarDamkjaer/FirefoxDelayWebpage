@@ -22,13 +22,15 @@ youtube\.com`
   };
   let { color, time, text, fontSize, textColor, runOn } = settings;
   color = color || "#fff";
-  text = text || "default text";
+  text = text === "" ? "" : text || "default text";
   fontSize = "3vw";
   textColor = textColor || "#000";
   time = time === 0 ? 0 : time || 7;
   runOn =
-    runOn ||
-    String.raw`hckrnews\.com
+    runOn === ""
+      ? ""
+      : runOn ||
+        String.raw`hckrnews\.com
 reddit\.com
 facebook\.com
 news\.ycombinator\.com
