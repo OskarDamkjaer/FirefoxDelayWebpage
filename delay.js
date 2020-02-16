@@ -1,40 +1,26 @@
-function onError(error) {
-  console.log(
-    `Error: ${error}\n\n please leave a review and tell me to fix this`
-  );
-}
-
-const getting = browser.storage.sync.get("settings");
-getting.then(onGot, onError);
-
-function onGot(item) {
-  const settings = item.settings || {
-    color: "#fff",
-    text: "default text",
-    fontSize: "3vw",
-    textColor: "#000",
-    time: 7,
-    runOn: String.raw`hckrnews\.com
+const defaults = {
+  color: "#fff",
+  textColor: "#000",
+  time: 7,
+  text: "default text",
+  fontSize: "3vw",
+  runOn: String.raw`hckrnews\.com
 reddit\.com
 facebook\.com
 news\.ycombinator\.com
 youtube\.com`
-  };
-  let { color, time, text, fontSize, textColor, runOn } = settings;
-  color = color || "#fff";
-  text = text === "" ? "" : text || "default text";
-  fontSize = "3vw";
-  textColor = textColor || "#000";
-  time = time === 0 ? 0 : time || 7;
-  runOn =
-    runOn === ""
-      ? ""
-      : runOn ||
-        String.raw`hckrnews\.com
-reddit\.com
-facebook\.com
-news\.ycombinator\.com
-youtube\.com`;
+};
+
+browser.storage.sync.get("settings").then(onGot, onError);
+
+function onGot(item) {
+  const settings = item.settings || defaults;
+  const color = vOrDefault(settings.color, defaults.color);
+  const textColor = vOrDefault(settings.textColor, defaults.textColor);
+  const time = vOrDefault(settings.time, defaults.time);
+  const text = vOrDefault(settings.text, defaults.text);
+  const fontSize = vOrDefault(settings.fontSize, defaults.fontSize);
+  const runOn = vOrDefault(settings.runOn, defaults.runOn);
 
   if (
     !runOn
@@ -93,4 +79,20 @@ color:${textColor};`;
 
   document.addEventListener("visibilitychange", handleVisibilityChange, false);
   removeBlockingDiv();
+}
+
+function onError(error) {
+  console.log(
+    `Error: ${error}\n\n please leave a review and tell me to fix this`
+  );
+}
+
+function vOrDefault(v, def) {
+  if (v) {
+    return v;
+  } else if (v === "" || v === {} || v === 0) {
+    return v;
+  } else {
+    return def;
+  }
 }

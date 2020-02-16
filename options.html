@@ -15,22 +15,22 @@
 
             <label>
                 Font size
-                <input type="text" id="fontSize" >
+                <input required type="text" id="fontSize" >
             </label>
 
             <label>
                 Text color (hex)
-                <input pattern="^#(([0-9a-fA-F]{2}){3}|([0-9a-fA-F]){3})$"  type="text" id="textColor" >
+                <input required pattern="^#(([0-9a-fA-F]{2}){3}|([0-9a-fA-F]){3})$"  type="text" id="textColor" >
             </label>
 
             <label>
                 Background color (hex)
-                <input pattern="^#(([0-9a-fA-F]{2}){3}|([0-9a-fA-F]){3})$" type="text" id="color" >
+                <input required pattern="^#(([0-9a-fA-F]{2}){3}|([0-9a-fA-F]){3})$" type="text" id="color" >
             </label>
 
             <label>
-                Time in seconds
-                <input type="number" min="0" id="time" >
+                Time in seconds (fractions such as 0.5 allowed)
+                <input required type="number" min="0" id="time" step="0.1" >
             </label>
 
             <label>
@@ -42,6 +42,9 @@
                 So the following example patterns work quite neatly:
                 <br>
                 <ul>
+                    <li>
+                        <input readonly style="border:none" value="youtube" > delay all webpages with "youtube" in the url
+                    </li>
                     <li>
                         <input readonly style="border:none" value=".*" > delay all pages
                     </li>

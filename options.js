@@ -1,10 +1,23 @@
+const defaults = {
+  color: "#fff",
+  textColor: "#000",
+  time: 7,
+  text: "default text",
+  fontSize: "3vw",
+  runOn: String.raw`hckrnews\.com
+reddit\.com
+facebook\.com
+news\.ycombinator\.com
+youtube\.com`
+};
+
 function saveOptions(e) {
   e.preventDefault();
   browser.storage.sync.set({
     settings: {
       color: document.querySelector("#color").value,
       textColor: document.querySelector("#textColor").value,
-      time: parseInt(document.querySelector("#time").value, 10),
+      time: parseFloat(document.querySelector("#time").value, 10),
       text: document.querySelector("#text").value,
       fontSize: document.querySelector("#fontSize").value,
       runOn: document.querySelector("#runOn").value
@@ -13,30 +26,34 @@ function saveOptions(e) {
   document.getElementById("savedSettings").style = "color:green;";
 }
 
-const defaultBlocks = String.raw`hckrnews\.com
-reddit\.com
-facebook\.com
-news\.ycombinator\.com
-youtube\.com`;
-
 function restoreOptions() {
   function setCurrentChoice(result) {
     const settings = (result && result.settings) || {};
-    document.querySelector("#color").value = settings.color || "#fff";
-    document.querySelector("#textColor").value = settings.textColor || "#000";
-    document.querySelector("#text").value = settings.text || "default text";
-    document.querySelector("#time").value = settings.time || 7;
-    document.querySelector("#fontSize").value = settings.fontSize || "3vw";
-    document.querySelector("#runOn").value = settings.runOn || defaultBlocks;
+    Object.keys(defaults).forEach(
+      key =>
+        (document.querySelector(`#${key}`).value = vOrDefault(
+          settings[key],
+          defaults[key]
+        ))
+    );
   }
 
   function onError(error) {
     console.log(`Error: ${error}`);
   }
 
-  let getting = browser.storage.sync.get("settings");
-  getting.then(setCurrentChoice, onError);
+  browser.storage.sync.get("settings").then(setCurrentChoice, onError);
 }
 
 document.addEventListener("DOMContentLoaded", restoreOptions);
 document.querySelector("form").addEventListener("submit", saveOptions);
+
+function vOrDefault(v, def) {
+  if (v) {
+    return v;
+  } else if (v === "" || v === {} || v === 0) {
+    return v;
+  } else {
+    return def;
+  }
+}
