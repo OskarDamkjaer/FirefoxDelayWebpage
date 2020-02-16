@@ -28,13 +28,18 @@
             </label>
 
             <label>
+                Also delay links opened while on delayed page?
+                <input type="checkbox" id="delayLinks" >
+            </label>
+
+            <label>
                 Delay time in seconds (fractions such as 0.5 allowed)
                 <input required type="number" min="0" id="time" step="0.01" >
             </label>
 
             <label>
-                Also delay links opened while on delayed page?
-                <input type="checkbox" id="delayLinks" >
+                Variance in delay time. Adds at most +-variance to delay time.
+                <input type="number" min="0" id="variance" step="0.01" >
             </label>
 
             <label>

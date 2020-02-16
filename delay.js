@@ -9,10 +9,13 @@ reddit\.com
 facebook\.com
 news\.ycombinator\.com
 youtube\.com`,
-  delayLinks: false
+  delayLinks: false,
+  variance: 0
 };
 
 browser.storage.sync.get("settings").then(onGot, onError);
+
+let timeout;
 
 function onGot(item) {
   const settings = item.settings || defaults;
@@ -23,6 +26,11 @@ function onGot(item) {
   const fontSize = vOrDefault(settings.fontSize, defaults.fontSize);
   const runOn = vOrDefault(settings.runOn, defaults.runOn);
   const delayLinks = vOrDefault(settings.delayLinks, defaults.delayLinks);
+  const variance = vOrDefault(settings.variance, defaults.variance);
+
+  const sign = Math.random() < 0.5 ? 1 : -1;
+  const actualVariance = Math.random() * variance * sign;
+  const blockTime = Math.max(0, 1000 * (time + actualVariance));
 
   const urlMatchesSettings = url =>
     runOn
@@ -43,7 +51,6 @@ function onGot(item) {
       return;
     }
   }
-  let timeout;
 
   function removeBlockingDiv() {
     timeout = setTimeout(() => {
@@ -55,7 +62,7 @@ function onGot(item) {
           false
         );
       }
-    }, time * 1000);
+    }, blockTime);
   }
 
   function handleVisibilityChange() {
@@ -84,7 +91,8 @@ color:${textColor};`;
   blocking_div.appendChild(
     document.createTextNode(
       text === "default text"
-        ? `Wait ${time} seconds for the page to load`
+        ? `Wait ${Math.round(blockTime / 100) /
+            10} seconds for the page to load`
         : text
     )
   );
@@ -100,7 +108,7 @@ color:${textColor};`;
         document.documentElement.appendChild(blocking_div);
         setTimeout(() => {
           document.getElementById("__dly_id__").remove();
-        }, time * 1000);
+        }, blockTime);
 
         // pause video to prevent audio in background
         const v = document.querySelector("video");
@@ -112,8 +120,27 @@ color:${textColor};`;
     window.addEventListener("yt-page-data-updated", handleYtPageChange, false);
   }
 
+  if (urlMatchesSettings("www.reddit.com")) {
+    // ugly way to handle spa, we check if url checked after clicks
+    lastSpaUrl = document.URL;
+
+    document.onclick = () => {
+      if (document.URL !== lastSpaUrl) {
+        lastSpaUrl = document.URL;
+        const el = document.getElementById("__dly_id__");
+        if (!el) {
+          document.documentElement.appendChild(blocking_div);
+          setTimeout(() => {
+            document.getElementById("__dly_id__").remove();
+          }, blockTime);
+        }
+      }
+    };
+  }
+
   removeBlockingDiv();
 }
+let lastSpaUrl = "";
 
 function onError(error) {
   console.log(
