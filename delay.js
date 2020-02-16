@@ -8,7 +8,8 @@ const defaults = {
 reddit\.com
 facebook\.com
 news\.ycombinator\.com
-youtube\.com`
+youtube\.com`,
+  delayLinks: false
 };
 
 browser.storage.sync.get("settings").then(onGot, onError);
@@ -21,14 +22,26 @@ function onGot(item) {
   const text = vOrDefault(settings.text, defaults.text);
   const fontSize = vOrDefault(settings.fontSize, defaults.fontSize);
   const runOn = vOrDefault(settings.runOn, defaults.runOn);
+  const delayLinks = vOrDefault(settings.delayLinks, defaults.delayLinks);
 
-  if (
-    !runOn
+  const urlMatchesSettings = url =>
+    runOn
       .split("\n")
       .map(s => s.trim())
-      .find(pattern => RegExp(pattern).test(document.URL))
-  ) {
-    return;
+      .find(pattern => RegExp(pattern).test(url));
+
+  if (urlMatchesSettings(document.URL)) {
+    // continue
+  } else {
+    if (delayLinks) {
+      if (urlMatchesSettings(document.referrer)) {
+        //continue
+      } else {
+        return;
+      }
+    } else {
+      return;
+    }
   }
   let timeout;
 

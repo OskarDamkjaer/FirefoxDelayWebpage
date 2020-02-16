@@ -8,7 +8,8 @@ const defaults = {
 reddit\.com
 facebook\.com
 news\.ycombinator\.com
-youtube\.com`
+youtube\.com`,
+  delayLinks: false
 };
 
 function saveOptions(e) {
@@ -20,7 +21,8 @@ function saveOptions(e) {
       time: parseFloat(document.querySelector("#time").value, 10),
       text: document.querySelector("#text").value,
       fontSize: document.querySelector("#fontSize").value,
-      runOn: document.querySelector("#runOn").value
+      runOn: document.querySelector("#runOn").value,
+      delayLinks: document.querySelector("#delayLinks").checked
     }
   });
   document.getElementById("savedSettings").style = "color:green;";
@@ -29,13 +31,14 @@ function saveOptions(e) {
 function restoreOptions() {
   function setCurrentChoice(result) {
     const settings = (result && result.settings) || {};
-    Object.keys(defaults).forEach(
-      key =>
-        (document.querySelector(`#${key}`).value = vOrDefault(
-          settings[key],
-          defaults[key]
-        ))
-    );
+    Object.keys(defaults).forEach(key => {
+      const el = document.querySelector(`#${key}`);
+      if (el.type === "checkbox") {
+        el.checked = vOrDefault(settings[key], defaults[key]);
+      } else {
+        el.value = vOrDefault(settings[key], defaults[key]);
+      }
+    });
   }
 
   function onError(error) {
