@@ -91,6 +91,27 @@ color:${textColor};`;
   document.documentElement.appendChild(blocking_div);
 
   document.addEventListener("visibilitychange", handleVisibilityChange, false);
+
+  if (urlMatchesSettings("youtube.com")) {
+    function handleYtPageChange() {
+      const el = document.getElementById("__dly_id__");
+      if (!el) {
+        // on full reload el is already mounted
+        document.documentElement.appendChild(blocking_div);
+        setTimeout(() => {
+          document.getElementById("__dly_id__").remove();
+        }, time * 1000);
+
+        // pause video to prevent audio in background
+        const v = document.querySelector("video");
+        if (v) {
+          v.pause();
+        }
+      }
+    }
+    window.addEventListener("yt-page-data-updated", handleYtPageChange, false);
+  }
+
   removeBlockingDiv();
 }
 
