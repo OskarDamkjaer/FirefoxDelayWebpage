@@ -1,16 +1,16 @@
 const defaults = {
   color: "#fff",
-  textColor: "#000",
+  textColor: "#808080",
   time: 7,
   text: "default text",
-  fontSize: "3vw",
+  fontSize: "2vw",
   runOn: String.raw`hckrnews\.com
 reddit\.com
 facebook\.com
 news\.ycombinator\.com
 youtube\.com`,
   delayLinks: false,
-  variance: 0
+  variance: 0,
 };
 
 browser.storage.sync.get("settings").then(onGot, onError);
@@ -32,11 +32,11 @@ function onGot(item) {
   const actualVariance = Math.random() * variance * sign;
   const blockTime = Math.max(0, 1000 * (time + actualVariance));
 
-  const urlMatchesSettings = url =>
+  const urlMatchesSettings = (url) =>
     runOn
       .split("\n")
-      .map(s => s.trim())
-      .find(pattern => RegExp(pattern).test(url));
+      .map((s) => s.trim())
+      .find((pattern) => RegExp(pattern).test(url));
 
   if (urlMatchesSettings(document.URL)) {
     // continue
@@ -91,8 +91,9 @@ color:${textColor};`;
   blocking_div.appendChild(
     document.createTextNode(
       text === "default text"
-        ? `Wait ${Math.round(blockTime / 100) /
-            10} seconds for the page to load`
+        ? `Wait ${
+            Math.round(blockTime / 100) / 10
+          } seconds for the page to load`
         : text
     )
   );
@@ -120,12 +121,13 @@ color:${textColor};`;
     window.addEventListener("yt-page-data-updated", handleYtPageChange, false);
   }
 
-  if (urlMatchesSettings("www.reddit.com")) {
-    // ugly way to handle spa, we check if url checked after clicks
-    lastSpaUrl = document.URL;
+  // an attempt to handle SPA page-changes
+  lastSpaPath = new URL(document.URL).pathname;
 
-    document.onclick = () => {
-      if (document.URL !== lastSpaUrl) {
+  document.addEventListener(
+    "mouseup",
+    () => {
+      if (new URL(document.URL).pathname !== lastSpaPath) {
         lastSpaUrl = document.URL;
         const el = document.getElementById("__dly_id__");
         if (!el) {
@@ -135,16 +137,17 @@ color:${textColor};`;
           }, blockTime);
         }
       }
-    };
-  }
+    },
+    true
+  );
 
   removeBlockingDiv();
 }
-let lastSpaUrl = "";
+let lastSpaPath = "";
 
 function onError(error) {
   console.log(
-    `Error: ${error}\n\n please leave a review and tell me to fix this`
+    `The DelayWebpage had an error, please leave a review or open an issue at https://github.com/OskarDamkjaer/FirefoxDelayWebpage. The error was: \n\n ${error}`
   );
 }
 

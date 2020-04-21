@@ -1,16 +1,16 @@
 const defaults = {
   color: "#fff",
-  textColor: "#000",
+  textColor: "#808080",
   time: 7,
   text: "default text",
-  fontSize: "3vw",
+  fontSize: "2vw",
   runOn: String.raw`hckrnews\.com
 reddit\.com
 facebook\.com
 news\.ycombinator\.com
 youtube\.com`,
   delayLinks: false,
-  variance: 0
+  variance: 0,
 };
 
 function saveOptions(e) {
@@ -24,8 +24,8 @@ function saveOptions(e) {
       fontSize: document.querySelector("#fontSize").value,
       runOn: document.querySelector("#runOn").value,
       delayLinks: document.querySelector("#delayLinks").checked,
-      variance: document.querySelector("#variance").value
-    }
+      variance: document.querySelector("#variance").value,
+    },
   });
   document.getElementById("savedSettings").style = "color:green;";
 }
@@ -33,7 +33,7 @@ function saveOptions(e) {
 function restoreOptions() {
   function setCurrentChoice(result) {
     const settings = (result && result.settings) || {};
-    Object.keys(defaults).forEach(key => {
+    Object.keys(defaults).forEach((key) => {
       const el = document.querySelector(`#${key}`);
       if (el.type === "checkbox") {
         el.checked = vOrDefault(settings[key], defaults[key]);
