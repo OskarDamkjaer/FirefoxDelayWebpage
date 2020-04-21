@@ -1,25 +1,25 @@
 {
-    "manifest_version": 2,
-    "name": "DelayWebpage",
-    "version": "1.9",
-    "description": "Sets a delay to distracting websites to help you browse more mindfully",
-    "icons": {
-        "512": "icon.png"
-    },
-    "content_scripts": [
-        {
-            "matches": ["<all_urls>"],
-            "js": ["delay.js"],
-            "run_at": "document_start"
-        }
-    ],
-    "options_ui": {
-        "page": "options.html"
-    },
-    "permissions": ["storage"],
-    "applications": {
-        "gecko": {
-            "id": "{d08be0ef-4964-48c9-b6a8-6918e05c6f89}"
-        }
+  "manifest_version": 2,
+  "name": "DelayWebpage",
+  "version": "1.92",
+  "description": "Sets a delay to distracting websites to help you browse more mindfully",
+  "icons": {
+    "512": "icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["delay.js"],
+      "run_at": "document_start"
     }
+  ],
+  "options_ui": {
+    "page": "options.html"
+  },
+  "permissions": ["storage"],
+  "applications": {
+    "gecko": {
+      "id": "{d08be0ef-4964-48c9-b6a8-6918e05c6f89}"
+    }
+  }
 }
