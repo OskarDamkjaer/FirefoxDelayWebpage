@@ -128,7 +128,7 @@ color:${textColor};`;
     "mouseup",
     () => {
       if (new URL(document.URL).pathname !== lastSpaPath) {
-        lastSpaUrl = document.URL;
+        lastSpaUrl = new URL(document.URL).pathname;
         const el = document.getElementById("__dly_id__");
         if (!el) {
           document.documentElement.appendChild(blocking_div);

@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "DelayWebpage",
-  "version": "1.92",
+  "version": "1.921",
   "description": "Sets a delay to distracting websites to help you browse more mindfully",
   "icons": {
     "512": "icon.png"
