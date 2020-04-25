@@ -101,7 +101,10 @@ color:${textColor};`;
 
   document.addEventListener("visibilitychange", handleVisibilityChange, false);
 
-  if (urlMatchesSettings("youtube.com")) {
+  if (
+    urlMatchesSettings("youtube.com") &&
+    document.URL.includes("youtube.com")
+  ) {
     function handleYtPageChange() {
       const el = document.getElementById("__dly_id__");
       if (!el) {
@@ -121,28 +124,32 @@ color:${textColor};`;
     window.addEventListener("yt-page-data-updated", handleYtPageChange, false);
   }
 
-  // an attempt to handle SPA page-changes
-  lastSpaPath = new URL(document.URL).pathname;
+  if (!document.URL.includes("youtube.com")) {
+    // an attempt to handle SPA page-changes
+    lastSpaPath = new URL(document.URL).pathname;
 
-  document.addEventListener(
-    "mouseup",
-    () => {
-      if (new URL(document.URL).pathname !== lastSpaPath) {
-        lastSpaUrl = new URL(document.URL).pathname;
-        const el = document.getElementById("__dly_id__");
-        if (!el) {
-          document.documentElement.appendChild(blocking_div);
-          setTimeout(() => {
-            document.getElementById("__dly_id__").remove();
-          }, blockTime);
-        }
-      }
-    },
-    true
-  );
+    document.addEventListener(
+      "mouseup",
+      () =>
+        setTimeout(() => {
+          if (new URL(document.URL).pathname !== lastSpaPath) {
+            lastSpaPath = new URL(document.URL).pathname;
+            const el = document.getElementById("__dly_id__");
+            if (!el) {
+              document.documentElement.appendChild(blocking_div);
+              setTimeout(() => {
+                document.getElementById("__dly_id__").remove();
+              }, blockTime);
+            }
+          }
+        }, 300),
+      true
+    );
+  }
 
   removeBlockingDiv();
 }
+
 let lastSpaPath = "";
 
 function onError(error) {
