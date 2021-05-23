@@ -25,3 +25,21 @@ browser.permissions.onRemoved.addListener((permissions) => {
     });
   }
 });
+
+// TODO fix web ext types repo
+//@ts-ignore type author hasn't implemented temporary
+browser.runtime.onInstalled.addListener(async ({ reason, temporary }) => {
+  //if (temporary) return; // skip during development
+  switch (reason) {
+    case "install":
+      {
+        const url = browser.runtime.getURL("options.html");
+        await browser.tabs.create({ url });
+      }
+      break;
+    case "update": {
+      const url = browser.runtime.getURL("options.html");
+      await browser.tabs.create({ url });
+    }
+  }
+});

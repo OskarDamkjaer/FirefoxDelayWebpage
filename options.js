@@ -1,18 +1,3 @@
-const defaultOptions = {
-  color: "#fff",
-  textColor: "#808080",
-  time: 7,
-  text: "default text",
-  fontSize: "2vw",
-  runOn: String.raw`hckrnews\.com
-reddit\.com
-facebook\.com
-news\.ycombinator\.com
-youtube\.com`,
-  delayLinks: false,
-  variance: 0,
-};
-
 function saveOptions(e) {
   e.preventDefault();
   browser.storage.sync.set({
@@ -26,19 +11,36 @@ function saveOptions(e) {
       delayLinks: document.querySelector("#delayLinks").checked,
       variance: document.querySelector("#variance").value,
     },
+    newSettings: { useNewSettings: true },
   });
   document.getElementById("savedSettings").style = "color:green;";
 }
 
 function restoreOptions() {
+  // duplicated to avoid using bundler
+  const old_default_settings = {
+    color: "#fff",
+    textColor: "#808080",
+    time: 7,
+    text: "default text",
+    fontSize: "2vw",
+    runOn: String.raw`hckrnews\.com
+  reddit\.com
+  facebook\.com
+  news\.ycombinator\.com
+  youtube\.com`,
+    delayLinks: false,
+    variance: 0,
+  };
+
   function setCurrentChoice(result) {
     const settings = (result && result.settings) || {};
-    Object.keys(defaultOptions).forEach((key) => {
+    Object.keys(old_default_settings).forEach((key) => {
       const el = document.querySelector(`#${key}`);
       if (el.type === "checkbox") {
-        el.checked = vOrDefault(settings[key], defaultOptions[key]);
+        el.checked = vOrDefault(settings[key], old_default_settings[key]);
       } else {
-        el.value = vOrDefault(settings[key], defaultOptions[key]);
+        el.value = vOrDefault(settings[key], old_default_settings[key]);
       }
     });
   }

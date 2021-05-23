@@ -1,33 +1,50 @@
-console.log("IRUN");
-const defaults = {
-  color: "#fff",
-  textColor: "#808080",
-  time: 7,
-  text: "default text",
-  fontSize: "2vw",
-  runOn: String.raw`hckrnews\.com
-reddit\.com
-facebook\.com
-news\.ycombinator\.com
-youtube\.com`,
-  delayLinks: false,
-  variance: 0,
-};
+browser.storage.sync.get("newSettings").then((item) => {
+  // @ts-ignore types wrong in lib
+  if (item.newSettings.useNewSettings) {
+    onGot(item.newSettings);
+  } else {
+    browser.storage.sync.get("settings").then(oldOnGot, onError);
+  }
+}, onError);
 
-browser.storage.sync.get("settings").then(onGot, onError);
+function onGot(newSettings) {
+  console.log("yes");
+}
 
-let timeout;
+let old_timeout;
+let old_lastSpaPath = "";
+function oldOnGot(item) {
+  // duplicated to avoid using bundler
+  const old_default_settings = {
+    color: "#fff",
+    textColor: "#808080",
+    time: 7,
+    text: "default text",
+    fontSize: "2vw",
+    runOn: String.raw`hckrnews\.com
+  reddit\.com
+  facebook\.com
+  news\.ycombinator\.com
+  youtube\.com`,
+    delayLinks: false,
+    variance: 0,
+  };
 
-function onGot(item) {
-  const settings = item.settings || defaults;
-  const color = vOrDefault(settings.color, defaults.color);
-  const textColor = vOrDefault(settings.textColor, defaults.textColor);
-  const time = vOrDefault(settings.time, defaults.time);
-  const text = vOrDefault(settings.text, defaults.text);
-  const fontSize = vOrDefault(settings.fontSize, defaults.fontSize);
-  const runOn = vOrDefault(settings.runOn, defaults.runOn);
-  const delayLinks = vOrDefault(settings.delayLinks, defaults.delayLinks);
-  const variance = vOrDefault(settings.variance, defaults.variance);
+  const settings = item.settings || old_default_settings;
+  const color = vOrDefault(settings.color, old_default_settings.color);
+  const textColor = vOrDefault(
+    settings.textColor,
+    old_default_settings.textColor
+  );
+  const time = vOrDefault(settings.time, old_default_settings.time);
+  const text = vOrDefault(settings.text, old_default_settings.text);
+  const fontSize = vOrDefault(settings.fontSize, old_default_settings.fontSize);
+  const runOn = vOrDefault(settings.runOn, old_default_settings.runOn);
+  const delayLinks = vOrDefault(
+    settings.delayLinks,
+    old_default_settings.delayLinks
+  );
+  const variance = vOrDefault(settings.variance, old_default_settings.variance);
 
   const sign = Math.random() < 0.5 ? 1 : -1;
   const actualVariance = Math.random() * variance * sign;
@@ -54,7 +71,7 @@ function onGot(item) {
   }
 
   function removeBlockingDiv() {
-    timeout = setTimeout(() => {
+    old_timeout = setTimeout(() => {
       if (document.visibilityState === "visible") {
         removeDivIfExists();
         document.removeEventListener(
@@ -70,7 +87,7 @@ function onGot(item) {
     if (document.visibilityState === "visible") {
       removeBlockingDiv();
     } else {
-      clearTimeout(timeout);
+      clearTimeout(old_timeout);
     }
   }
 
@@ -125,14 +142,14 @@ color:${textColor};`;
 
   if (!document.URL.includes("youtube.com")) {
     // an attempt to handle SPA page-changes
-    lastSpaPath = new URL(document.URL).pathname;
+    old_lastSpaPath = new URL(document.URL).pathname;
 
     document.addEventListener(
       "mouseup",
       () =>
         setTimeout(() => {
-          if (new URL(document.URL).pathname !== lastSpaPath) {
-            lastSpaPath = new URL(document.URL).pathname;
+          if (new URL(document.URL).pathname !== old_lastSpaPath) {
+            old_lastSpaPath = new URL(document.URL).pathname;
             const el = document.getElementById("__dly_id__");
             if (!el) {
               document.documentElement.appendChild(blocking_div);
@@ -146,17 +163,10 @@ color:${textColor};`;
 
   removeBlockingDiv();
 }
+
 function removeDivIfExists() {
   const div = document.getElementById("__dly_id__");
   div && div.remove();
-}
-
-let lastSpaPath = "";
-
-function onError(error) {
-  console.log(
-    `The DelayWebpage had an error, please leave a review or open an issue at https://github.com/OskarDamkjaer/FirefoxDelayWebpage. The error was: \n\n ${error}`
-  );
 }
 
 function vOrDefault(v, def) {
@@ -167,4 +177,10 @@ function vOrDefault(v, def) {
   } else {
     return def;
   }
+}
+
+function onError(error) {
+  console.log(
+    `The DelayWebpage had an error, please leave a review or open an issue at https://github.com/OskarDamkjaer/FirefoxDelayWebpage. The error was: \n\n ${error}`
+  );
 }
