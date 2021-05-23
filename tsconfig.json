@@ -2,16 +2,17 @@
   "compilerOptions": {
     "alwaysStrict": true,
     "noEmit": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "strictNullChecks": true,
     "allowJs": true,
+    "checkJs": true,
     "lib": ["es6", "dom"],
     "typeRoots": ["node_modules/web-ext-types"]
   },
-  "include": ["**/*.js"],
+  "include": ["**/*.js", "background.ts"],
   "exclude": ["node_modules"]
 }

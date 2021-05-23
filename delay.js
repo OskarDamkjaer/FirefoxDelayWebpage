@@ -1,3 +1,4 @@
+console.log("IRUN");
 const defaults = {
   color: "#fff",
   textColor: "#808080",
@@ -55,7 +56,7 @@ function onGot(item) {
   function removeBlockingDiv() {
     timeout = setTimeout(() => {
       if (document.visibilityState === "visible") {
-        document.getElementById("__dly_id__").remove();
+        removeDivIfExists();
         document.removeEventListener(
           "visibilitychange",
           handleVisibilityChange,
@@ -106,9 +107,7 @@ color:${textColor};`;
     if (!el) {
       // on full reload el is already mounted
       document.documentElement.appendChild(blocking_div);
-      setTimeout(() => {
-        document.getElementById("__dly_id__").remove();
-      }, blockTime);
+      setTimeout(removeDivIfExists, blockTime);
 
       // pause video to prevent audio in background
       const v = document.querySelector("video");
@@ -137,9 +136,7 @@ color:${textColor};`;
             const el = document.getElementById("__dly_id__");
             if (!el) {
               document.documentElement.appendChild(blocking_div);
-              setTimeout(() => {
-                document.getElementById("__dly_id__").remove();
-              }, blockTime);
+              setTimeout(removeDivIfExists, blockTime);
             }
           }
         }, 300),
@@ -148,6 +145,10 @@ color:${textColor};`;
   }
 
   removeBlockingDiv();
+}
+function removeDivIfExists() {
+  const div = document.getElementById("__dly_id__");
+  div && div.remove();
 }
 
 let lastSpaPath = "";

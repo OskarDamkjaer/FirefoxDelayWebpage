@@ -1,4 +1,4 @@
-const defaults = {
+const defaultOptions = {
   color: "#fff",
   textColor: "#808080",
   time: 7,
@@ -33,12 +33,12 @@ function saveOptions(e) {
 function restoreOptions() {
   function setCurrentChoice(result) {
     const settings = (result && result.settings) || {};
-    Object.keys(defaults).forEach((key) => {
+    Object.keys(defaultOptions).forEach((key) => {
       const el = document.querySelector(`#${key}`);
       if (el.type === "checkbox") {
-        el.checked = vOrDefault(settings[key], defaults[key]);
+        el.checked = vOrDefault(settings[key], defaultOptions[key]);
       } else {
-        el.value = vOrDefault(settings[key], defaults[key]);
+        el.value = vOrDefault(settings[key], defaultOptions[key]);
       }
     });
   }
@@ -50,8 +50,32 @@ function restoreOptions() {
   browser.storage.sync.get("settings").then(setCurrentChoice, onError);
 }
 
+const permissions = { origins: ["<all_urls>"] };
+
+function requestPermissions() {
+  function onResponse(response) {
+    if (response) {
+      console.log("Permission was granted");
+    } else {
+      console.log("Permission was refused");
+    }
+    return browser.permissions.getAll();
+  }
+
+  browser.permissions
+    .request(permissions)
+    .then(onResponse)
+    .then((currentPermissions) => {
+      console.log(`Current permissions:`, currentPermissions);
+    });
+}
+
+document
+  ?.querySelector("#permissions")
+  ?.addEventListener("click", requestPermissions);
+
 document.addEventListener("DOMContentLoaded", restoreOptions);
-document.querySelector("form").addEventListener("submit", saveOptions);
+document.querySelector("form")?.addEventListener("submit", saveOptions);
 
 function vOrDefault(v, def) {
   if (v) {

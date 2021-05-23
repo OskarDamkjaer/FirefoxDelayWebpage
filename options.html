@@ -1,75 +1,92 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <meta charset="utf-8">
-    </head>
+  <head>
+    <meta charset="utf-8" />
+  </head>
 
-    <body>
-        <form style="display: flex; flex-direction: column;">
-            <label>
-                Text
-                <input type="text" id="text" >
-            </label>
+  <body>
+    <form style="display: flex; flex-direction: column">
+      <label>
+        Text
+        <input type="text" id="text" />
+      </label>
+      <button id="permissions">LEG</button>
 
-            <label>
-                Font size
-                <input required type="text" id="fontSize" >
-            </label>
+      <label>
+        Font size
+        <input required type="text" id="fontSize" />
+      </label>
 
-            <label>
-                Text color (hex)
-                <input required pattern="^#(([0-9a-fA-F]{2}){3}|([0-9a-fA-F]){3})$"  type="text" id="textColor" >
-            </label>
+      <label>
+        Text color (hex)
+        <input
+          required
+          pattern="^#(([0-9a-fA-F]{2}){3}|([0-9a-fA-F]){3})$"
+          type="text"
+          id="textColor"
+        />
+      </label>
 
-            <label>
-                Background color (hex)
-                <input required pattern="^#(([0-9a-fA-F]{2}){3}|([0-9a-fA-F]){3})$" type="text" id="color" >
-            </label>
+      <label>
+        Background color (hex)
+        <input
+          required
+          pattern="^#(([0-9a-fA-F]{2}){3}|([0-9a-fA-F]){3})$"
+          type="text"
+          id="color"
+        />
+      </label>
 
-            <label>
-                Also delay links opened while on delayed page?
-                <input type="checkbox" id="delayLinks" >
-            </label>
+      <label>
+        Also delay links opened while on delayed page?
+        <input type="checkbox" id="delayLinks" />
+      </label>
 
-            <label>
-                Delay time in seconds (fractions such as 0.5 allowed)
-                <input required type="number" min="0" id="time" step="0.01" >
-            </label>
+      <label>
+        Delay time in seconds (fractions such as 0.5 allowed)
+        <input required type="number" min="0" id="time" step="0.01" />
+      </label>
 
-            <label>
-                Variance in delay time. Adds at most +-variance ly. to delay time
-                <input type="number" min="0" id="variance" step="0.01" >
-            </label>
+      <label>
+        Variance in delay time. Adds at most +-variance ly. to delay time
+        <input type="number" min="0" id="variance" step="0.01" />
+      </label>
 
-            <label style="margin-top: 20px";>
-                Webpages to run on, use same format as default block list for best results:
-                <textarea rows="10" cols="33" id="runOn" > </textarea>
-                <br>
+      <label style="margin-top: 20px" ;>
+        Webpages to run on, use same format as default block list for best
+        results:
+        <textarea rows="10" cols="33" id="runOn"> </textarea>
+        <br />
 
-                This uses <code>RexExp(pattern).test(document.URL)</code> internally.
-                So the following example patterns work quite neatly:
-                <br>
-                <ul>
-                    <li>
-                        <input readonly style="border:none" value="youtube" > delay all webpages with "youtube" in the url
-                    </li>
-                    <li>
-                        <input readonly style="border:none" value=".*" > delay all pages
-                    </li>
-                    <li>
-                <input readonly style="border:none" value="^((?!\google.com).)*$" > delay all pages without "google.com" in the name 
-                </li>
-                </ul>
-            </label>
+        This uses <code>RexExp(pattern).test(document.URL)</code> internally. So
+        the following example patterns work quite neatly:
+        <br />
+        <ul>
+          <li>
+            <input readonly style="border: none" value="youtube" /> delay all
+            webpages with "youtube" in the url
+          </li>
+          <li>
+            <input readonly style="border: none" value=".*" /> delay all pages
+          </li>
+          <li>
+            <input
+              readonly
+              style="border: none"
+              value="^((?!\google.com).)*$"
+            />
+            delay all pages without "google.com" in the name
+          </li>
+        </ul>
+      </label>
 
-            <span>
-            <button type="submit">Save</button>
-            </span>
-        </form>
-        <div style="display: none;" id="savedSettings"> Updated settings.</div>
+      <span>
+        <button type="submit">Save</button>
+      </span>
+    </form>
+    <div style="display: none" id="savedSettings">Updated settings.</div>
 
-        <script src="options.js"></script>
-    </body>
-
+    <script src="options.js"></script>
+  </body>
 </html>
