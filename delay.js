@@ -101,26 +101,26 @@ color:${textColor};`;
 
   document.addEventListener("visibilitychange", handleVisibilityChange, false);
 
+  function handleYtPageChange() {
+    const el = document.getElementById("__dly_id__");
+    if (!el) {
+      // on full reload el is already mounted
+      document.documentElement.appendChild(blocking_div);
+      setTimeout(() => {
+        document.getElementById("__dly_id__").remove();
+      }, blockTime);
+
+      // pause video to prevent audio in background
+      const v = document.querySelector("video");
+      if (v) {
+        v.pause();
+      }
+    }
+  }
   if (
     urlMatchesSettings("youtube.com") &&
     document.URL.includes("youtube.com")
   ) {
-    function handleYtPageChange() {
-      const el = document.getElementById("__dly_id__");
-      if (!el) {
-        // on full reload el is already mounted
-        document.documentElement.appendChild(blocking_div);
-        setTimeout(() => {
-          document.getElementById("__dly_id__").remove();
-        }, blockTime);
-
-        // pause video to prevent audio in background
-        const v = document.querySelector("video");
-        if (v) {
-          v.pause();
-        }
-      }
-    }
     window.addEventListener("yt-page-data-updated", handleYtPageChange, false);
   }
 

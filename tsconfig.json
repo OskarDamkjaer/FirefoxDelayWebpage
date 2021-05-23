@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "noEmit": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strictNullChecks": true,
+    "allowJs": true,
+    "lib": ["es6", "dom"],
+    "typeRoots": ["node_modules/web-ext-types"]
+  },
+  "include": ["**/*.js"],
+  "exclude": ["node_modules"]
+}

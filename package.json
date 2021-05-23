@@ -1,0 +1,15 @@
+{
+  "name": "firefox-delay-webpage",
+  "version": "1.0.0",
+  "description": "Delay webpages to help you browse more mindfully.",
+  "repository": "git@github.com:OskarDamkjaer/FirefoxDelayWebpage.git",
+  "author": "Oskar Damkjaer <oskar.damkjaer@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.24.0",
+    "@typescript-eslint/parser": "^4.24.0",
+    "eslint": "^7.27.0",
+    "typescript": "^4.2.4",
+    "web-ext-types": "^3.2.1"
+  }
+}
